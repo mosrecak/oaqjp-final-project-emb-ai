@@ -9,7 +9,7 @@ def render_index_page():
 
 @app.route('/emotionDetector')
 def emotion_detector():
-    text_to_analyze = request.args.get("text_to_analyze")
+    text_to_analyze = request.args.get('textToAnalyze')
     
     if not text_to_analyze:
         return {"message": "Invalid input parameter"}, 422
