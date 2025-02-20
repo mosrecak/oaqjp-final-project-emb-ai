@@ -1,0 +1,2 @@
+[MASTER]
+init-hook='import sys; sys.path.append("/home/theia/.local/lib/python3.10/site-packages")
