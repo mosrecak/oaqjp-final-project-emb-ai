@@ -14,7 +14,7 @@ def emotion_detector(text_to_analyze):
         emotions = json_dictionary['emotionPredictions'][0]['emotion']
         dominant_emotion = max(emotions.items(), key=lambda x: x[1])
         emotions['dominant_emotion'] = dominant_emotion[0]
-    else:
+    elif status_code == 400:
         emotions['anger'] = None
         emotions['disgust'] = None
         emotions['fear'] = None

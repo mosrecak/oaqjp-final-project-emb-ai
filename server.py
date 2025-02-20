@@ -1,34 +1,34 @@
-from __future__ import print_function # In python 2.7
+'''Final project assignment'''
 from flask import Flask, request, render_template
 from EmotionDetection.emotion_detection import emotion_detector
 
-app = Flask("__name__")
+app = Flask("Emotion Detector")
 
-@app.route('/')
-def render_index_page():
-    return render_template('index.html')
-
-@app.route('/emotionDetector')
-def detector():
+@app.route("/emotionDetector")
+def emotion_analyzer():
+    '''emotion detector function    '''
     text_to_analyze = request.args.get('textToAnalyze')
- 
-    emotions = emotion_detector(text_to_analyze)
+    emotion_result = emotion_detector(text_to_analyze)
+    anger = emotion_result['anger']
+    disgust = emotion_result['disgust']
+    fear = emotion_result['fear']
+    joy = emotion_result['joy']
+    sadness = emotion_result['sadness']
+    dominant_emotion = emotion_result['dominant_emotion']
 
-    anger = emotions['anger']
-    disgust = emotions['disgust']
-    fear = emotions['fear']
-    joy = emotions['joy']
-    sadness = emotions['sadness']
-    dominant_emotion = emotions['dominant_emotion']
+    if dominant_emotion is None:
+        return "Invalid text! Please try again"
 
-    if not text_to_analyze:
-        return "Please input a new sentence", 422
-
-    response = f"""For the given statement, the system response is
+    response_str = f"""For the given statement, the system response is
     'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, 'joy': {joy}, 'sadness': {sadness}.
     The dominant emotion is <strong>{dominant_emotion}</strong>."""
-    return response, 200
+    return response_str
 
+@app.route("/")
+def render_index_page():
+    '''Home/index page'''
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+    
